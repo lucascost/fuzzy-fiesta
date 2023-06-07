@@ -1,0 +1,9 @@
+<div class="row" *ngFor="let cliente of pedidos">
+  <div class="col-2">{{cliente.nome}}</div>
+  <div class="col-8">
+    <ng-container *ngFor="let produto of cliente.produtos" >
+      <span class="badge rounded-pill bg-primary">{{ produto }}</span>
+    </ng-container>
+  </div>
+  <div class="col-2" *ngIf="cliente.total > 0">R$ {{cliente.total.toFixed(2)}} <span *ngIf="cliente.paga_taxa">(c/ 10%)</span> </div>
+</div>

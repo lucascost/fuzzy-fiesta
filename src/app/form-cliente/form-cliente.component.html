@@ -1,0 +1,63 @@
+<div class="row align">
+  <div class="col-4">
+    <label for="fNomeCliente">Nome do cliente</label>
+    <input type="text" class="form-control" id="fNomeCliente" placeholder="Informe o nome do cliente" [(ngModel)]="nomeCliente" [disabled]="bloquearNome">
+  </div>
+  <div class="col-4">
+    <label for="selectItem">Selecione um produto</label>
+    <select id="selectItem" class="form-select" [(ngModel)]="produto">
+      <ng-container *ngFor="let produto of produtos">
+        <option value="{{produto.nome}}">{{produto.nome}}</option>
+      </ng-container>
+    </select>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" [(ngModel)]="compartilha">
+      <label class="form-check-label" for="flexCheckDefault">
+        Vou compartilhar esse item
+      </label>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="row h-100">
+      <div class="col-6">
+        <label for="quantItem">Quantidade</label>
+        <input type="number" value="1" class="form-control" min="1" id="quantItem" [(ngModel)]="quantidade">
+      </div>
+      <div class="col-6 d-flex flex-column justify-content-center">
+        <input type="button" value="Adicionar" class="btn btn-primary" (click)="adicionarSelecionado()">
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- LISTA -->
+<div *ngIf="produtosSelecionados.length > 0">
+  <p><b>Produtos de {{nomeCliente}}</b></p>
+  <div class="row" *ngFor="let produto of produtosSelecionados; let i = index">
+    <div class="col">
+      <i class="fa-solid fa-close" (click)="produtosSelecionados.splice(i, 1)"></i>
+      ({{produto.quantidade}}) {{produto.nome}} <span *ngIf="produto.compartilha">(compartilhado)</span>
+    </div>
+  </div>
+</div>
+
+<!-- BOTOES -->
+
+<div class="row justify-content-end align-items-center">
+  <div class="col d-flex  justify-content-end">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" [(ngModel)]="pagaTaxa">
+        <label class="form-check-label" for="flexCheckDefault">
+          Quero pagar os 10%
+        </label>
+      </div>
+  </div>
+  <div class="col-2">
+    <input type="button" value="Confirmar" class="btn btn-success w-100" (click)="enviarPedido()">
+  </div>
+  <div class="col-2">
+    <input type="button" value="Fechar" class="btn btn-danger w-100" (click)="cancelar()">
+  </div>
+</div>

@@ -1,1 +1,30 @@
-<app-calculadora></app-calculadora>
+<div class="content">
+  <h2>Resumo da Conta</h2>
+  <br>
+  <p><b>Produtos</b></p>
+  <ng-container *ngIf="produtos.length === 0">
+    <p class="text-muted">Não há produtos para exibir.</p>
+  </ng-container>
+  <app-item-list [list]="produtos"></app-item-list>
+  <br>
+  <p><b>Clientes</b></p>
+  <ng-container *ngIf="clientes.length === 0">
+    <p class="text-muted">Não há clientes para exibir.</p>
+  </ng-container>
+  <app-cliente-list [pedidos]="pedidosPorCliente()"></app-cliente-list>
+</div>
+<div class="content" *ngIf="bloquearInterface">
+
+  <ng-container *ngIf="exibirFormProduto">
+    <app-form-item class="row" (dadosProduto)="adicionarProduto($event)" (btnCancelar)="cancelar()"></app-form-item>
+  </ng-container>
+
+  <ng-container *ngIf="exibirFormCliente">
+    <app-form-cliente [produtos]="produtos" (dadosPedido)="adicionarPedido($event)" (btnCancelar)="cancelar()"></app-form-cliente>
+  </ng-container>
+</div>
+<div class="botoes justify-content-center">
+    <input type="button" class="btn btn-primary" value="Adicionar Produto" [disabled]="bloquearInterface" (click)="formProduto()">
+    <input type="button" class="btn btn-primary" value="Adicionar Cliente" [disabled]="bloquearInterface" (click)="formCliente()">
+    <input type="button" class="btn btn-success" value="Calcular" [disabled]="bloquearInterface" (click)="calcular()">
+</div>
